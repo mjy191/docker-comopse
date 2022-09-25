@@ -6,6 +6,6 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - "/home/jenkins:/var/jenkins_home"
+      - "/home/docker/jenkins:/var/jenkins_home"
     image: jenkins/jenkins:lts
     restart: always
