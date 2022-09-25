@@ -1,0 +1,54 @@
+version: "3"
+services:
+  nginx:
+    build: .
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - "/home/docker/lnmp/nginx/html:/usr/share/nginx/html"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/home/docker/lnmp/nginx/conf:/etc/nginx"
+      - "/home/docker/lnmp/nginx/log:/var/log/nginx"
+    image: nginx:latest
+    restart: always
+  mysql:
+    build: .
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/home/docker/lnmp/mysql/data:/var/lib/mysql"
+      - "/home/docker/lnmp/mysql/etc/my.cnf:/etc/my.cnf"
+    image: mysql:5.7.39
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456abc
+  php-fpm7.4:
+    build: ./php7.4
+    container_name: php-fpm7.4
+    ports:
+      - "9001:9000"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/home/docker/lnmp/php-fpm7.4/conf:/usr/local/etc"
+      - "/home/docker/lnmp/php-fpm7.4/logs:/usr/local/var/log"
+      - "/home/docker/lnmp/php-fpm7.4/logs:/usr/local/var/run"
+      - "/home/docker/lnmp/nginx/html:/var/www/html"
+    restart: always
+  redis:
+    container_name: redis
+    privileged: true
+    ports:
+      - "6379:6379"
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/home/docker/lnmp/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "/home/docker/lnmp/redis/data:/data"
+      - "/home/docker/lnmp/redis/logs:/logs"
+    image: redis:latest
+    restart: always
+    environment:
+      - TZ="Asia/Shanghai"
+    command: ["redis-server","/usr/local/etc/redis/redis.conf","--appendonly yes"]

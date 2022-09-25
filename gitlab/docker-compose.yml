@@ -1,0 +1,13 @@
+version: "3"
+services:
+  gitlab:
+    build: .
+    container_name: gitlab
+    ports:
+      - "9000:9000"
+    volumes:
+      - "/home/docker/gitlab/etc:/etc/gitlab"
+      - "/home/docker/gitlab/logs:/var/log/gitlab"
+      - "/home/docker/gitlab/data:/var/opt/gitlab"
+    image: gitlab/gitlab-ce:latest
+    restart: always
