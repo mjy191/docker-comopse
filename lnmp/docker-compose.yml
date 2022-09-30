@@ -1,7 +1,6 @@
 version: "3"
 services:
   nginx:
-    build: .
     container_name: nginx
     ports:
       - "80:80"
@@ -13,7 +12,6 @@ services:
     image: nginx:latest
     restart: always
   mysql:
-    build: .
     container_name: mysql
     ports:
       - "3306:3306"
