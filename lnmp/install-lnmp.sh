@@ -62,6 +62,7 @@ chmod -R 777 $conf_dir/redis/logs
 echo "end redis conf"
 
 echo "start docker-compose up"
+cp -f docker-compose.yml docker-compose.yml.bak
 sed -i "s#/home/docker/lnmp#${conf_dir}#g" docker-compose.yml
 docker-compose up -d
 echo "end docker-compose"
