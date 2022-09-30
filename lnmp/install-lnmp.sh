@@ -1,6 +1,11 @@
 #/bin/bash
 set -xe
-conf_dir=/home/docker/lnmp
+
+default_conf_dir=/home/docker/lnmp
+read -p "conf_dir default:${default_conf_dir}" conf_dir
+if [ ! $conf_dir ];then
+  conf_dir=$default_conf_dir
+fi
 
 echo "start nginx conf"
 docker pull nginx:latest
@@ -57,5 +62,6 @@ chmod -R 777 $conf_dir/redis/logs
 echo "end redis conf"
 
 echo "start docker-compose up"
+sed -i "s#/home/docker/lnmp#${conf_dir}#g" docker-compose.yml
 docker-compose up -d
 echo "end docker-compose"
