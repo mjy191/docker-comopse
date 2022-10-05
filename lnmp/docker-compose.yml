@@ -22,7 +22,7 @@ services:
     image: mysql:5.7.39
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 123456abc
+      MYSQL_ROOT_PASSWORD: 123456
   php-fpm7.4:
     build: ./php7.4
     container_name: php-fpm7.4
