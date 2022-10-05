@@ -48,6 +48,7 @@ do
 	chmod -R 777 $conf_dir/mysql/data
 	docker cp mysql-test:/etc/my.cnf $conf_dir/mysql/etc/
 	docker cp mysql-test:/var/lib/mysql/. $conf_dir/mysql/data/
+	chmod 0555 $conf_dir/mysql/etc/my.cnf
 done
 docker rm -f mysql-test
 echo "end mysql conf"
