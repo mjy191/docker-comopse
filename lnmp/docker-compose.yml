@@ -26,8 +26,6 @@ services:
   php-fpm7.4:
     build: ./php7.4
     container_name: php-fpm7.4
-    ports:
-      - "9001:9000"
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "/home/docker/lnmp/php-fpm7.4/conf:/usr/local/etc"
