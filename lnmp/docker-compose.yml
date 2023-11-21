@@ -5,10 +5,10 @@ services:
     ports:
       - "80:80"
     volumes:
-      - "/home/docker/lnmp/nginx/html:/usr/share/nginx/html"
+      - "${LNMP_DATA}/nginx/html:/usr/share/nginx/html"
       - "/etc/localtime:/etc/localtime:ro"
-      - "/home/docker/lnmp/nginx/conf:/etc/nginx"
-      - "/home/docker/lnmp/nginx/log:/var/log/nginx"
+      - "${LNMP_DATA}/nginx/conf:/etc/nginx"
+      - "${LNMP_DATA}/nginx/log:/var/log/nginx"
     image: nginx:latest
     restart: always
   mysql:
@@ -17,21 +17,20 @@ services:
       - "3306:3306"
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "/home/docker/lnmp/mysql/data:/var/lib/mysql"
-      - "/home/docker/lnmp/mysql/etc/my.cnf:/etc/my.cnf"
+      - "${LNMP_DATA}/mysql/data:/var/lib/mysql"
     image: mysql:5.7.39
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 123456
   php-fpm7.4:
-    build: ./php7.4
+    image: php-fpm7.4:2
     container_name: php-fpm7.4
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "/home/docker/lnmp/php-fpm7.4/conf:/usr/local/etc"
-      - "/home/docker/lnmp/php-fpm7.4/logs:/usr/local/var/log"
-      - "/home/docker/lnmp/php-fpm7.4/logs:/usr/local/var/run"
-      - "/home/docker/lnmp/nginx/html:/var/www/html"
+      - "${LNMP_DATA}/php-fpm7.4/conf:/usr/local/etc"
+      - "${LNMP_DATA}/php-fpm7.4/logs:/usr/local/var/log"
+      - "${LNMP_DATA}/php-fpm7.4/logs:/usr/local/var/run"
+      - "${LNMP_DATA}/nginx/html:/var/www/html"
     restart: always
   redis:
     container_name: redis
@@ -40,9 +39,9 @@ services:
       - "6379:6379"
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
-      - "/home/docker/lnmp/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf"
-      - "/home/docker/lnmp/redis/data:/data"
-      - "/home/docker/lnmp/redis/logs:/logs"
+      - "${LNMP_DATA}/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf"
+      - "${LNMP_DATA}/redis/data:/data"
+      - "${LNMP_DATA}/redis/logs:/logs"
     image: redis:latest
     restart: always
     environment:

@@ -6,6 +6,7 @@ read -p "conf_dir default:${default_conf_dir}" conf_dir
 if [ ! $conf_dir ];then
   conf_dir=$default_conf_dir
 fi
+echo LNMP_DATA=${conf_dir} > .env
 
 echo "start nginx conf"
 docker run -it -d --name nginx-test nginx:latest
@@ -62,7 +63,5 @@ chmod -R 777 $conf_dir/redis/logs
 echo "end redis conf"
 
 echo "start docker-compose up"
-cp -f docker-compose.yml docker-compose.yml.bak
-sed -i "s#/home/docker/lnmp#${conf_dir}#g" docker-compose.yml
 docker-compose up -d
 echo "end docker-compose"
